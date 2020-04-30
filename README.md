@@ -138,6 +138,9 @@ and `speeches_Senate_113.tab`. These files should all be stored in `data/senate-
 (venv)$ python setup/poisson_factorization.py  --data=senate-speech-comparisons  --senate_session=111
 (venv)$ python setup/poisson_factorization.py  --data=senate-speech-comparisons  --senate_session=112
 (venv)$ python setup/poisson_factorization.py  --data=senate-speech-comparisons  --senate_session=113
+(venv)$ python tbip.py  --data=senate-speech-comparisons  --max_steps=200000  --senate_session=111  --batch_size=128
+(venv)$ python tbip.py  --data=senate-speech-comparisons  --max_steps=200000  --senate_session=112  --batch_size=128
+(venv)$ python tbip.py  --data=senate-speech-comparisons  --max_steps=200000  --senate_session=113  --batch_size=128
 ```
 
 ### Run Wordfish for Senate speech comparisons
