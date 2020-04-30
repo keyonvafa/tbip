@@ -9,3 +9,9 @@ env/
 # but don't include raw documents
 data/senate-speeches-114/clean/raw_documents.txt
 !data/senate-speeches-114/pf-fits/*
+
+# include candidate tweet data
+!data/candidate-tweets-2020/clean/*
+# but don't include raw documents
+data/candidate-tweets-2020/clean/raw_documents.txt
+!data/candidate-tweets-2020/pf-fits/*
