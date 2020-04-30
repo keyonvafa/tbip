@@ -84,11 +84,6 @@ author_indices = np.array([senator_to_senator_id[s.title()]
                            for s in matched_tweet_authors])
 author_map = np.array(list(senator_to_senator_id.keys()))
 
-# Use the authors first and last names as stopwords.
-first_names = np.array([author.split(" ")[0].lower() for author in author_map])
-last_names = np.array([author.split(" ")[1].lower() for author in author_map])
-all_names = np.union1d(first_names, last_names)
-
 stopwords = set(np.loadtxt(os.path.join(project_dir, 
                                         "setup/stopwords/senate_tweets.txt"),
                 dtype=str,

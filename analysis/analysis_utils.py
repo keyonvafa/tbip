@@ -182,7 +182,7 @@ def get_ideological_topic_means(objective_topic_loc,
   Denoting by mu_e the ideological topic location and sigma_e the ideological
   topic scale, we have E[beta * exp(eta)] = E[beta]E[exp(eta)] by the 
   mean-field assumption. exp(eta) is lognormal distributed, so E[exp(eta)] =
-  exp(mu_e + sigma_e^2 /2). Thus, E[beta * exp(eta)] = 
+  exp(mu_e + sigma_e^2 / 2). Thus, E[beta * exp(eta)] = 
   exp(mu_b + mu_e + (sigma_b^2 + sigma_e^2) / 2).
   
   Finally, E[beta * exp(-eta)] = 
