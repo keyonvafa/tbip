@@ -7,7 +7,7 @@ Configure a virtual environment using Python 3.6+. Inside the virtual environmen
 ```{bash}
 (venv)$ pip install -r requirements.txt
 ```
-The main depednencies are Tensorflow (1.14.0) and Tensorflow Probability (0.7.0).
+The main dependencies are Tensorflow (1.14.0) and Tensorflow Probability (0.7.0).
 
 ## Installation for CPU
 To run on CPU, a version of Tensorflow that does not use GPU must be installed. In 
