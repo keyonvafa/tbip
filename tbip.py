@@ -22,8 +22,6 @@ The directory `data/{data_name}/clean/` should have the following four files:
      denoting the corresponding word in the vocabulary.
   4. `author_map.txt`: a [num_authors]-length file where each line is a string
      denoting the name of an author in the corpus.
-Also, make sure to add {data_name} to the possible `enum_values` for `data` in
-line 75.
 
 We provide more details in our paper [1].
 
@@ -70,13 +68,9 @@ flags.DEFINE_boolean("pre_initialize_parameters",
                      default=True,
                      help="Whether to use pre-initialized document and topic "
                           "intensities (with Poisson factorization).")
-flags.DEFINE_enum("data",
-                  default="senate-speeches-114",
-                  enum_values=["candidate-tweets-2020",
-                               "senate-speeches-114", 
-                               "senate-tweets-114",
-                               "senate-speech-comparisons"],
-                  help="Data source being used.")
+flags.DEFINE_string("data",
+                    default="senate-speeches-114",
+                    help="Data source being used.")
 flags.DEFINE_integer("senate_session",
                      default=113,
                      help="Senate session (used only when data is "

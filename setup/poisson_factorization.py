@@ -23,13 +23,9 @@ flags.DEFINE_integer("num_topics",
 flags.DEFINE_integer("max_steps",
                      default=300,
                      help="Maximum number of steps")
-flags.DEFINE_enum("data",
-                  default="senate-speeches-114",
-                  enum_values=["candidate-tweets-2020",
-                               "senate-speeches-114",
-                               "senate-tweets-114",
-                               "senate-speech-comparisons"],
-                  help="Data source being used.")
+flags.DEFINE_string("data",
+                    default="senate-speeches-114",
+                    help="Data source being used.")
 flags.DEFINE_integer("senate_session",
                      default=113,
                      help="Senate session (used only when data is "
