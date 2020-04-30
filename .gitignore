@@ -6,4 +6,6 @@ env/
 
 # include senate speeches data
 !data/senate-speeches-114/clean/*
+# but don't include raw documents
+data/senate-speeches-114/clean/raw_documents.txt
 !data/senate-speeches-114/pf-fits/*
