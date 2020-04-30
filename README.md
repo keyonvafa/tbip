@@ -7,7 +7,7 @@ Configure a virtual environment using Python 3.6+. Inside the virtual environmen
 ```{bash}
 (venv)$ pip install -r requirements.txt
 ```
-The main depednencies are Tensorflow (1.14.0) and Tensorflow Probability (0.7.0).
+The main dependencies are Tensorflow (1.14.0) and Tensorflow Probability (0.7.0).
 
 ## Installation for CPU
 To run on CPU, a version of Tensorflow that does not use GPU must be installed. In 
@@ -77,6 +77,113 @@ To view the results in Tensorboard, run
 ```
 Again, the learned parameters will be stored in `data/{dataset_name}/tbip-fits/params`.
 
+## Reproducing Paper Results
+The commands below will reproduce all of the paper results. The following data is required before
+running the commands:
+
+* Senate votes: The original raw data can be found at [[2]](#2). The paper includes experiments
+for Senate sessions 111-114. For each Senate session, we need three files: one for votes,
+one for members, and one for rollcalls. For example, for Senate session 114,
+we would use the files: `S114_votes.csv`, `S114_members.csv`, `S114_rollcalls.csv`. Make a repo
+`data/senate-votes` and store these three files in `data/senate-votes/114/raw/`. Repeat
+for Senate sessions 111-113.
+* Senate speeches: The original raw data can be found at [[1]](#1). Specifically, we use the `hein-daily` 
+data for the 114th Senate session. The files needed are `speeches_114.txt`, `descr_114.txt`, 
+and `114_SpeakerMap.txt`. Make sure the relevant files are stored in 
+`data/senate-speeches-114/raw/`.
+* Senator tweets: The data was provided to us by Voxgov [[3]](#3).
+* Senate speech comparisons: We use a separate data set for the Senate speech comparisons
+because speech debates must be labeled for Wordshoal. The raw data can be found at [[4]](#4).
+The paper includes experiments for Senate sessions 111-113. We need the files 
+`speaker_senator_link_file.csv`, `speeches_Senate_111.tab`, `speeches_Senate_112.tab`, 
+and `speeches_Senate_113.tab`. These files should all be stored in `data/senate-speech-comparisons/raw/`.
+* Democratic presidential candidate tweets: The code requires that a file containing the raw tweets 
+(`tweets.csv`) be stored in `data/candidate-tweets-2020/raw/`. We are working on making this data available.
+
+### Preprocess, run vote ideal point model, and perform analysis for Senate votes
+```{bash}
+(venv)$ python setup/preprocess_senate_votes.py  --senate_session=111
+(venv)$ python setup/preprocess_senate_votes.py  --senate_session=112
+(venv)$ python setup/preprocess_senate_votes.py  --senate_session=113
+(venv)$ python setup/preprocess_senate_votes.py  --senate_session=114
+(venv)$ python setup/vote_ideal_points.py  --senate_session=111
+(venv)$ python setup/vote_ideal_points.py  --senate_session=112
+(venv)$ python setup/vote_ideal_points.py  --senate_session=113
+(venv)$ python setup/vote_ideal_points.py  --senate_session=114
+(venv)$ python analysis/analyze_vote_ideal_points.py
+```
+
+### Preprocess, run the TBIP, and perform analysis for Senate speeches for the 114th Senate
+```{bash}
+(venv)$ python setup/senate_speeches_to_bag_of_words.py
+(venv)$ python setup/poisson_factorization.py  --data=senate-speeches-114
+(venv)$ python tbip.py  --data=senate-speeches-114  --counts_transformation=log  --batch_size=512  --max_steps=150000
+(venv)$ python analysis/analyze_senate_speeches.py
+```
+
+### Preprocess, run the TBIP and Wordfish, and perform analysis for tweets from senators during the 114th Senate
+```{bash}
+(venv)$ python setup/senate_tweets_to_bag_of_words.py
+(venv)$ python setup/poisson_factorization.py  --data=senate-tweets-114
+(venv)$ python tbip.py  --data=senate-tweets-114  --batch_size=1024  --max_steps=100000
+(venv)$ python model_comparison/wordfish.py  --data=senate-tweets-114  --max_steps=50000
+(venv)$ python analysis/analyze_senate_tweets.py
+```
+
+### Preprocess and run the TBIP for Senate speech comparisons
+```{bash}
+(venv)$ python setup/preprocess_senate_speech_comparisons.py  --senate_session=111
+(venv)$ python setup/preprocess_senate_speech_comparisons.py  --senate_session=112
+(venv)$ python setup/preprocess_senate_speech_comparisons.py  --senate_session=113
+(venv)$ python setup/poisson_factorization.py  --data=senate-speech-comparisons  --senate_session=111
+(venv)$ python setup/poisson_factorization.py  --data=senate-speech-comparisons  --senate_session=112
+(venv)$ python setup/poisson_factorization.py  --data=senate-speech-comparisons  --senate_session=113
+(venv)$ python tbip.py  --data=senate-speech-comparisons  --max_steps=200000  --senate_session=111  --batch_size=128
+(venv)$ python tbip.py  --data=senate-speech-comparisons  --max_steps=200000  --senate_session=112  --batch_size=128
+(venv)$ python tbip.py  --data=senate-speech-comparisons  --max_steps=200000  --senate_session=113  --batch_size=128
+```
+
+### Run Wordfish for Senate speech comparisons
+```{bash}
+(venv)$ python model_comparison/wordfish.py  --data=senate-speech-comparisons  --max_steps=50000  --senate_session=111
+(venv)$ python model_comparison/wordfish.py  --data=senate-speech-comparisons  --max_steps=50000  --senate_session=112 
+(venv)$ python model_comparison/wordfish.py  --data=senate-speech-comparisons  --max_steps=50000  --senate_session=113
+```
+
+### Run Wordshoal for Senate speech comparisons
+```{bash}
+(venv)$ python model_comparison/wordshoal.py  --data=senate-speech-comparisons  --max_steps=30000  --senate_session=111  --batch_size=1024
+(venv)$ python model_comparison/wordshoal.py  --data=senate-speech-comparisons  --max_steps=30000  --senate_session=112  --batch_size=1024
+(venv)$ python model_comparison/wordshoal.py  --data=senate-speech-comparisons  --max_steps=30000  --senate_session=113  --batch_size=1024
+```
+
+### Analyze results for Senate speech comparisons
+```{bash}
+(venv)$ python analysis/compare_tbip_wordfish_wordshoal.py
+```
+
+### Preprocess, run the TBIP, and perform analysis for Democratic candidate tweets
+```{bash}
+(venv)$ python setup/candidate_tweets_to_bag_of_words.py
+(venv)$ python setup/poisson_factorization.py  --data=candidate-tweets-2020
+(venv)$ python tbip.py  --data=candidate-tweets-2020  --batch_size=1024  --max_steps=100000
+(venv)$ python analysis/analyze_candidate_tweets.py
+```
+
+### Make figures
+```{bash}
+(venv)$ python analysis/make_figures.py
+```
+
 ## References
 <a id="1">[1]</a> 
 Gentzkow, Matthew, Jesse M. Shapiro, and Matt Taddy. Congressional Record for the 43rd-114th Congresses: Parsed Speeches and Phrase Counts. Palo Alto, CA: Stanford Libraries [distributor], 2018-01-16. https://data.stanford.edu/congress_text
+
+<a id="2">[2]</a> 
+Lewis, Jeffrey B., Keith Poole, Howard Rosenthal, Adam Boche, Aaron Rudkin, and Luke Sonnet (2020). Voteview: Congressional Roll-Call Votes Database. https://voteview.com/
+
+<a id="3">[3]</a> 
+VoxGovFEDERAL, U.S. Senators tweets from the 114th Congress. 2020. https://voxgov.com
+
+<a id="4">[4]</a> 
+Benjamin E. Lauderdale and Alexander Herzog. Replication Data for: Measuring Political Positions from Legislative Speech. In Harvard Dataverse, 2016. https://doi.org/10.7910/DVN/RQMIV3
