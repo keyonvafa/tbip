@@ -97,8 +97,9 @@ because speech debates must be labeled for Wordshoal. The raw data can be found 
 The paper includes experiments for Senate sessions 111-113. We need the files 
 `speaker_senator_link_file.csv`, `speeches_Senate_111.tab`, `speeches_Senate_112.tab`, 
 and `speeches_Senate_113.tab`. These files should all be stored in `data/senate-speech-comparisons/raw/`.
-* Democratic presidential candidate tweets: The code requires that a file containing the raw tweets 
-(`tweets.csv`) be stored in `data/candidate-tweets-2020/raw/`. We are working on making this data available.
+* Democratic presidential candidate tweets: Download the raw tweets 
+[here](https://www.dropbox.com/sh/4sv7zzm9nixkarw/AAB3JX3GXQnh_xEhKqSB_819a?dl=0)
+and store `tweets.csv` in the folder `data/candidate-tweets-2020/raw/`.
 
 ### Preprocess, run vote ideal point model, and perform analysis for Senate votes
 ```{bash}
