@@ -77,6 +77,37 @@ To view the results in Tensorboard, run
 ```
 Again, the learned parameters will be stored in `data/{dataset_name}/tbip-fits/params`.
 
+## Reproducing Paper Results
+The following commands will reproduce all of the paper results. The following data is required:
+
+* Senate votes: The original raw data can be found at [[2]](#2). The paper includes experiments
+for Senate sessions 111-114. For each Senate session, we need three files: one for votes,
+one for members, and one for rollcalls. For example, for Senate session 114,
+we would use the files: `S114_votes.csv`, `S114_members.csv`, `S114_rollcalls.csv`. Make a repo
+`data/senate-votes` and store these three files in `data/senate-votes/114/raw/`. Repeat
+for Senate sessions 111-113.
+* Senate speeches: The original raw data can be found at [[1]](#1). Specifically, we use the `hein-daily` 
+data for the 114th Senate session. The files needed are `speeches_114.txt`, `descr_114.txt`, 
+and `114_SpeakerMap.txt`. Make sure the relevant files are stored in 
+`data/senate-speeches-114/raw/`.
+* Senator tweets: The data was provided to us by Voxgov [[3]](#3).
+* Senate speech comparisons: We use a separate data set for the Senate speech comparisons
+because speech debates must be labeled for Wordshoal. The raw data can be found at [[4]](#4).
+The paper includes experiments for Senate sessions 111-113. We need the files 
+`speaker_senator_link_file.csv`, `speeches_Senate_111.tab`, `speeches_Senate_112.tab`, 
+and `speeches_Senate_113.tab`. These files should all be stored in `data/senate-speech-comparisons/raw/`.
+* Democratic presidential candidate tweets: The code requires that a file containing the raw tweets 
+(`tweets.csv`) be stored in `data/candidate-tweets-2020/raw/`. We are working on making this data available.
+
 ## References
 <a id="1">[1]</a> 
 Gentzkow, Matthew, Jesse M. Shapiro, and Matt Taddy. Congressional Record for the 43rd-114th Congresses: Parsed Speeches and Phrase Counts. Palo Alto, CA: Stanford Libraries [distributor], 2018-01-16. https://data.stanford.edu/congress_text
+
+<a id="2">[2]</a> 
+Lewis, Jeffrey B., Keith Poole, Howard Rosenthal, Adam Boche, Aaron Rudkin, and Luke Sonnet (2020). Voteview: Congressional Roll-Call Votes Database. https://voteview.com/
+
+<a id="3">[3]</a> 
+VoxGovFEDERAL, U.S. Senators tweets from the 114th Congress. 2020. https://voxgov.com.  
+
+<a id="4">[4]</a> 
+Benjamin E. Lauderdale and Alexander Herzog. Replication Data for: Measuring Political Positions from Legislative Speech. In Harvard Dataverse, 2016. https://doi.org/10.7910/DVN/RQMIV3.
