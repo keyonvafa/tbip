@@ -1,7 +1,7 @@
 """Convert Senate tweets from 2020 Democratic candidates to bag of words.
 
 This requires that a file containing the tweets called `tweets.csv` be stored
-in  `text-based-ideal-points/data/candidate-tweets-2020/raw/`.
+in  `data/candidate-tweets-2020/raw/`.
 """
 
 import os

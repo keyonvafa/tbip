@@ -2,8 +2,8 @@
 
 The data is provided by [1]. Specifically, we use the `hein-daily` data. To 
 run this script, make sure the relevant files are in 
-`text-based-ideal-points/data/senate-speeches-114/raw/`. The files needed for
-this script are `speeches_114.txt`, `descr_114.txt`, and `114_SpeakerMap.txt`.
+`data/senate-speeches-114/raw/`. The files needed for this script are 
+`speeches_114.txt`, `descr_114.txt`, and `114_SpeakerMap.txt`.
 
 #### References
 [1]: Gentzkow, Matthew, Jesse M. Shapiro, and Matt Taddy. Congressional Record 
