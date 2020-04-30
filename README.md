@@ -18,7 +18,8 @@ comment out the line that says `tensorflow-gpu==1.14.0` and uncomment the line t
 ## Data
 Preprocessed Senate speech data for the 114th Congress is included in 
 [data/senate-speeches-114](https://github.com/keyonvafa/tbip/tree/master/data/senate-speeches-114). 
-The original data is from [[1]](#1).
+The original data is from [[1]](#1). Preprocessed 2020 Democratic presidential candidate tweet data is included in
+[data/candidate-tweets-2020](https://github.com/keyonvafa/tbip/tree/master/data/candidate-tweets-2020). 
 
 To include a customized data set, first create a repo `data/{dataset_name}/clean/`. The
 following four files must be inside this folder:
@@ -53,6 +54,8 @@ and ideological topics). To run Tensorboard, use the command:
 ```
 The command should output a link where you can view the Tensorboard results in real time.
 The fitted parameters will be stored in `data/senate-speeches-114/tbip-fits/params`.
+To perform the above analyses for the 2020 Democratic candidate tweets, replace `senate-speeches-114` 
+with `candidate-tweets-2020`.
 
 To run custom data, we recommend training Poisson factorization before running the TBIP script
 for best results. If you have custom data stored in `data/{dataset_name}/clean/`, you can run
