@@ -1,5 +1,9 @@
-data/
+data/*
 figs/
 __pycache__/
 env/
 .DS_Store
+
+# include senate speeches data
+!data/senate-speeches-114/clean/*
+!data/senate-speeches-114/pf-fits/*
