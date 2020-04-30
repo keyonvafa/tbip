@@ -599,7 +599,7 @@ def main(argv):
                 document_scale_val)
         np.save(os.path.join(param_save_dir, "objective_topic_loc"), 
                 objective_topic_loc_val)
-        np.save(param_save_dir + "objective_topic_scale", 
+        np.save(os.path.join(param_save_dir, "objective_topic_scale"), 
                 objective_topic_scale_val)
         np.save(os.path.join(param_save_dir, "ideological_topic_loc"), 
                 ideological_topic_loc_val)
