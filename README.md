@@ -2,7 +2,8 @@
 Source code for the paper: Text-Based Ideal Points by Keyon Vafa, Suresh Naidu, and David Blei (ACL 2020).
 
 ## Installation for GPU
-Configure a virtual environment using Python 3.6+. Inside the virtual environment, use `pip` to install the required packages:
+Configure a virtual environment using Python 3.6+ ([instructions here](https://docs.python.org/3.6/tutorial/venv.html)).
+Inside the virtual environment, use `pip` to install the required packages:
 
 ```{bash}
 (venv)$ pip install -r requirements.txt
