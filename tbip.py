@@ -92,7 +92,10 @@ def inverse_softplus(x):
   return np.log(np.exp(np.clip(x, a_min=1e-5, a_max=30)) - 1.)
 
 
-def build_input_pipeline(data_dir, batch_size, random_state):
+def build_input_pipeline(data_dir, 
+                         batch_size, 
+                         random_state, 
+                         counts_transformation="nothing"):
   """Load data and build iterator for minibatches.
   
   Args:
@@ -101,6 +104,8 @@ def build_input_pipeline(data_dir, batch_size, random_state):
       `author_map.txt`, and `vocabulary.txt`.
     batch_size: The batch size to use for training.
     random_state: A NumPy `RandomState` object, used to shuffle the data.
+    counts_transformation: A string indicating how to transform the counts.
+      One of "nothing", "binary", "log", or "sqrt".
   """
   counts = sparse.load_npz(os.path.join(data_dir, "counts.npz"))
   num_documents, num_words = counts.shape
@@ -114,13 +119,13 @@ def build_input_pipeline(data_dir, batch_size, random_state):
   def get_row_py_func(idx):
     def get_row_python(idx_py):
       batch_counts = np.squeeze(np.array(counts[idx_py].todense()), axis=0)
-      if FLAGS.counts_transformation == "nothing":
+      if counts_transformation == "nothing":
         return batch_counts
-      elif FLAGS.counts_transformation == "binary":
+      elif counts_transformation == "binary":
         batch_counts[batch_counts > 1] = 1
-      elif FLAGS.counts_transformation == "log":
+      elif counts_transformation == "log":
         batch_counts = np.round(np.log(1 + batch_counts))
-      elif FLAGS.counts_transformation == "sqrt":
+      elif counts_transformation == "sqrt":
         batch_counts = np.round(np.sqrt(batch_counts))
       else:
         raise ValueError("Unrecognized counts transformation")
@@ -420,7 +425,8 @@ def main(argv):
    num_documents, num_words, num_authors) = build_input_pipeline(
       data_dir, 
       FLAGS.batch_size,
-      random_state)
+      random_state,
+      FLAGS.counts_transformation)
   
   document_indices, counts, author_indices = iterator.get_next()
 
