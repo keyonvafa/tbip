@@ -2,7 +2,7 @@
 Source code for the paper: 
 [Text-Based Ideal Points by Keyon Vafa, Suresh Naidu, and David Blei (ACL 2020)](https://arxiv.org/abs/2005.04232).
 
-**Update (May 11, 2020):** 
+**_Update (May 11, 2020):_** 
 See our [Colab notebook](https://colab.research.google.com/drive/1_KkVI2lGtPdgsHSKDIMhSLCKkHvBQ4LO?usp=sharing) 
 to run the model online. Our Github code is more complete, and it can be used to reproduce all of our experiments. 
 However, the TBIP is fastest on GPU, so if you do not have access to a GPU you can use Colab's GPUs for free. 
