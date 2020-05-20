@@ -32,7 +32,7 @@ tweets = pd.read_csv(os.path.join(data_dir, "voxgov_tweets.csv"))
 tweets = tweets[tweets.date >= "2015-01-03"]
 tweets = tweets[tweets.date < "2017-01-03"]
 
-# Remove tweets that don't from a Senator account.
+# Remove tweets that don't come from a Senator account.
 twitter_authors = tweets['source'].unique()
 twitter_authors = twitter_authors[twitter_authors != "U.S. Senate"]
 twitter_authors = twitter_authors[twitter_authors != 

@@ -84,14 +84,6 @@ flags.DEFINE_integer("seed",
 FLAGS = flags.FLAGS
 
 
-def standardize(x):
-  return (x - np.mean(x)) / np.std(x)
-
-
-def inverse_softplus(x):
-  return np.log(np.exp(np.clip(x, a_min=1e-5, a_max=30)) - 1.)
-
-
 def build_input_pipeline(data_dir, 
                          batch_size, 
                          random_state, 
@@ -115,34 +107,30 @@ def build_input_pipeline(data_dir,
   author_map = np.loadtxt(os.path.join(data_dir, "author_map.txt"),
                           dtype=str, 
                           delimiter="\n")
-
-  def get_row_py_func(idx):
-    def get_row_python(idx_py):
-      batch_counts = np.squeeze(np.array(counts[idx_py].todense()), axis=0)
-      if counts_transformation == "nothing":
-        return batch_counts
-      elif counts_transformation == "binary":
-        batch_counts[batch_counts > 1] = 1
-      elif counts_transformation == "log":
-        batch_counts = np.round(np.log(1 + batch_counts))
-      elif counts_transformation == "sqrt":
-        batch_counts = np.round(np.sqrt(batch_counts))
-      else:
-        raise ValueError("Unrecognized counts transformation")
-      return batch_counts
-    py_func = tf.py_func(get_row_python, [idx], tf.float32, stateful=False)
-    py_func.set_shape((num_words,))
-    return py_func
-
+  # Shuffle data.
   documents = random_state.permutation(num_documents)
   shuffled_author_indices = author_indices[documents]
-
+  shuffled_counts = counts[documents]
+  
+  # Apply counts transformation.
+  if counts_transformation == "nothing":
+    count_values = shuffled_counts.data
+  elif counts_transformation == "binary":
+    count_values = np.int32(shuffled_counts.data > 0)
+  if counts_transformation == "log":
+    count_values = np.round(np.log(1 + shuffled_counts.data))
+  elif counts_transformation == "sqrt":
+    count_values = np.round(np.sqrt(shuffled_counts.data))
+  else:
+    raise ValueError("Unrecognized counts transformation.")
+  
+  # Store counts as sparse tensor so it occupies less memory.
+  shuffled_counts = tf.SparseTensor(
+      indices=np.array(shuffled_counts.nonzero()).T, 
+      values=count_values,
+      dense_shape=shuffled_counts.shape)
   dataset = tf.data.Dataset.from_tensor_slices(
-      (documents, shuffled_author_indices))
-  dataset = dataset.map(lambda document, author: (
-      document, 
-      get_row_py_func(document), 
-      author))
+      (documents, shuffled_counts, shuffled_author_indices))
   batches = dataset.repeat().batch(batch_size).prefetch(batch_size)
   iterator = batches.make_one_shot_iterator()
   vocabulary = np.loadtxt(os.path.join(data_dir, "vocabulary.txt"), 
@@ -384,7 +372,9 @@ def get_elbo(counts,
       axis=2) 
 
   count_distribution = tfp.distributions.Poisson(rate=rate)
-  count_log_likelihood = count_distribution.log_prob(counts)
+  # Need to un-sparsify the counts to evaluate log-likelihood.
+  count_log_likelihood = count_distribution.log_prob(
+      tf.sparse.to_dense(counts))
   count_log_likelihood = tf.reduce_sum(count_log_likelihood, axis=[1, 2])
   # Adjust for the fact that we're only using a minibatch.
   count_log_likelihood = count_log_likelihood * (num_documents / batch_size)
