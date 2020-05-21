@@ -117,7 +117,7 @@ def build_input_pipeline(data_dir,
     count_values = shuffled_counts.data
   elif counts_transformation == "binary":
     count_values = np.int32(shuffled_counts.data > 0)
-  if counts_transformation == "log":
+  elif counts_transformation == "log":
     count_values = np.round(np.log(1 + shuffled_counts.data))
   elif counts_transformation == "sqrt":
     count_values = np.round(np.sqrt(shuffled_counts.data))
