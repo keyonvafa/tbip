@@ -410,7 +410,6 @@ def main(argv):
     tf.gfile.DeleteRecursively(save_dir)
   tf.gfile.MakeDirs(save_dir)
   
-  np.warnings.filterwarnings('ignore')  # suppress scipy.sparse warnings.
   (iterator, author_weights, vocabulary, author_map, 
    num_documents, num_words, num_authors) = build_input_pipeline(
       data_dir, 
