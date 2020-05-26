@@ -2,6 +2,10 @@
 Source code for the paper: 
 [Text-Based Ideal Points by Keyon Vafa, Suresh Naidu, and David Blei (ACL 2020)](https://arxiv.org/abs/2005.04232).
 
+**_Update (May 25, 2020):_** 
+We have added a [PyTorch implementation](https://github.com/keyonvafa/tbip/tree/master/pytorch/tbip.py) of the
+text-based ideal point model. 
+
 **_Update (May 11, 2020):_** 
 See our [Colab notebook](https://colab.research.google.com/drive/1_KkVI2lGtPdgsHSKDIMhSLCKkHvBQ4LO?usp=sharing) 
 to run the model online. Our Github code is more complete, and it can be used to reproduce all of our experiments. 
