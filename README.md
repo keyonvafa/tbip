@@ -89,6 +89,15 @@ To view the results in Tensorboard, run
 Again, the learned parameters will be stored in `data/{dataset_name}/tbip-fits/params`.
 
 ## Reproducing Paper Results
+NOTE: Since the publication of our paper, we have made small changes to the code that have sped up
+inference. A byproduct of these changes is that the Tensorflow graph has changed, so its random
+seed does not produce the same results as before the changes, even though the data, model, and
+inference are all the same. To reproduce the _exact_ paper results, one must `git checkout` to a
+version of our repository from before these changes:
+```{bash}
+(venv)$ git checkout 31d161e
+```
+
 The commands below will reproduce all of the paper results. The following data is required before
 running the commands:
 
