@@ -3,7 +3,7 @@ Source code for the paper:
 [Text-Based Ideal Points by Keyon Vafa, Suresh Naidu, and David Blei (ACL 2020)](https://arxiv.org/abs/2005.04232).
 
 **_Update (June 29, 2020):_**
-We have now added [interactive visualizations of topics learned by our model](https://keyonvafa.github.io/text-based-ideal-points/).
+We have added [interactive visualizations of topics learned by our model](https://keyonvafa.github.io/text-based-ideal-points/).
 
 **_Update (May 25, 2020):_** 
 We have added a [PyTorch implementation](https://github.com/keyonvafa/tbip/tree/master/pytorch/tbip.py) of the
