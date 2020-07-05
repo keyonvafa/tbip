@@ -1,6 +1,6 @@
 # Text-Based Ideal Points
 Source code for the paper: 
-[Text-Based Ideal Points by Keyon Vafa, Suresh Naidu, and David Blei (ACL 2020)](https://arxiv.org/abs/2005.04232).
+[Text-Based Ideal Points by Keyon Vafa, Suresh Naidu, and David Blei (ACL 2020)](https://www.aclweb.org/anthology/2020.acl-main.475/).
 
 **_Update (June 29, 2020):_**
 We have added [interactive visualizations of topics learned by our model](https://keyonvafa.github.io/text-based-ideal-points/).
