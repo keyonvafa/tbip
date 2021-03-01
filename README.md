@@ -59,7 +59,7 @@ contains example code for creating the four files from unprocessed data.
 Run [tbip.py](https://github.com/keyonvafa/tbip/blob/master/tbip.py) to produce ideal points.
 For the Senate speech data, use the command:
 ```{bash}
-(venv)$ python tbip.py  --data=senate-speeches-114  --batch_size=512
+(venv)$ python tbip.py  --data=senate-speeches-114  --batch_size=512  --max_steps=100000
 ```
 You can view Tensorboard while training to see summaries of training (including the learned ideal points
 and ideological topics). To run Tensorboard, use the command: 
