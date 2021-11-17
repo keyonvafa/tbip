@@ -62,7 +62,7 @@ flags.DEFINE_integer("num_topics",
                      default=50,
                      help="Number of topics.")
 flags.DEFINE_integer("batch_size",
-                     default=512,
+                     default=256,
                      help="Batch size.")
 flags.DEFINE_integer("num_samples",
                      default=1,
