@@ -1020,9 +1020,14 @@ def main(argv):
           model, inputs, outputs, optim, seed, tf.constant(step))
       checkpoint.seed.assign(seed)
 
-    duration = (time.time() - start_time) / (epoch - start_epoch)
-    print("Epoch: {:>3d} ELBO: {:.3f} Entropy: {:.1f} ({:.3f} sec)".format(
-      epoch, -total_loss.numpy(), -entropy_loss.numpy(), duration))
+    sec_per_epoch = (time.time() - start_time) / (epoch - start_epoch)
+    sec_per_step = (time.time() - start_time) / step
+    print("Epoch: {:>3d} ELBO: {:.3f} Entropy: {:.1f} ({:.3f} sec/step, "
+          "{:.3f} sec/epoch)".format(epoch, 
+                                     -total_loss.numpy(), 
+                                     -entropy_loss.numpy(), 
+                                     sec_per_step,
+                                     sec_per_epoch))
 
     # Log to tensorboard at the end of every `save_every` epochs.
     if epoch % FLAGS.save_every == 0:
