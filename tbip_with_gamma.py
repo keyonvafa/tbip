@@ -1020,8 +1020,8 @@ def main(argv):
           model, inputs, outputs, optim, seed, tf.constant(step))
       checkpoint.seed.assign(seed)
 
+    sec_per_step = (time.time() - start_time) / (step + 1)
     sec_per_epoch = (time.time() - start_time) / (epoch - start_epoch)
-    sec_per_step = (time.time() - start_time) / step
     print("Epoch: {:>3d} ELBO: {:.3f} Entropy: {:.1f} ({:.3f} sec/step, "
           "{:.3f} sec/epoch)".format(epoch, 
                                      -total_loss.numpy(), 
