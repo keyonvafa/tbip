@@ -2,6 +2,9 @@
 Source code for the paper: 
 [Text-Based Ideal Points by Keyon Vafa, Suresh Naidu, and David Blei (ACL 2020)](https://www.aclweb.org/anthology/2020.acl-main.475/).
 
+**_Update (October 31, 2022):_**
+See the [Numpyro implementation](https://colab.research.google.com/drive/1JQEbAf8aTuEw9X9Yfqsgi6cEScuQ-i6c?usp=sharing) of our model (thanks to [Szymon Sacher](szymon.info)). 
+
 **_Update (November 16, 2021):_**
 We have [updated](https://github.com/keyonvafa/tbip/blob/master/tbip_with_gamma.py) the inference procedure so that Gamma variational families can be used for the positive variables. This allows these variational parameters to be updated directly with coordinate ascent variational inference (CAVI), rather than with reparameterization gradients. As a result, the optimization procedure converges more quickly. Moreover, the learned topics are more interpretable, and they do not need to be initialized with Poisson factorization. The [code is here](https://github.com/keyonvafa/tbip/blob/master/tbip_with_gamma.py), and an [explainer can be found here](https://github.com/keyonvafa/tbip/blob/master/tbip_with_gamma_notes.md). Here's a [Colab notebook](https://colab.research.google.com/drive/15voumwlHX_kPzwPex16GAnun1o-tkjFB?usp=sharing) with the new code.
 
