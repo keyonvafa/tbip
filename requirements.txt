@@ -1,5 +1,5 @@
 matplotlib==3.0.3
-numpy==1.16.6
+numpy==1.22.0
 pandas==0.24.2
 tensorflow-gpu==1.14.0          # Comment this if not using GPU
 # tensorflow==1.14.0            # Uncomment this if not using GPU
